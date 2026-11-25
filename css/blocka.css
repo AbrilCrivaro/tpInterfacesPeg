@@ -1,0 +1,248 @@
+
+.blocka-juego {
+    width: fit-content;
+    margin: 0 auto 32px;
+    padding: 16px;
+    border: 1px solid var(--color-secundario-luz-3);
+    background: var(--color-secundario);
+}
+
+/* contenedor del lienzo: el HUD y el cartel se ubican encima */
+.blocka-tablero {
+    position: relative;
+}
+
+/* lienzo 16:9: alto fijo y el ancho se calcula con la proporción */
+#blocka-lienzo {
+    --alto-lienzo: 450px;
+    display: block;
+    height: var(--alto-lienzo);
+    width: calc(var(--alto-lienzo) * 16 / 9);          
+    border-radius: 12px;
+    background: #12131D;                               
+    cursor: pointer;
+    user-select: none;
+}
+
+.blocka-hud {
+    position: absolute;
+    top: 16px;
+    left: 40px;
+    right: 40px;
+    z-index: 3;                                       
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    pointer-events: none;                              
+}
+.blocka-hud > * {
+    pointer-events: auto;                             
+}
+/* tarjeta con los datos, con fondo distinto al del juego */
+.blocka-hud-datos {
+    display: flex;
+    gap: 6px;
+    padding: 6px 8px;
+    background: var(--color-secundario-luz-1) url("../assets/peg/telarana-hud.svg") right top / 90px no-repeat;
+    border: 1px solid var(--color-secundario-luz-2);
+    border-radius: 10px;
+}
+.blocka-hud-datos > div {
+    display: grid;
+    gap: 1px;
+}
+.blocka-hud small {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--color-texto-secundario);
+}
+.blocka-hud b {
+    min-width: 48px;
+    padding: 1px 6px;
+    text-align: center;
+    font-size: 12px;
+    line-height: 18px;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+    background: #0C0D14;
+    border: 1px solid var(--color-secundario-luz-2);
+    border-radius: 8px;
+}
+/* los últimos 10 segundos el tiempo se pone en rojo */
+.blocka-hud b.urgente {
+    color: var(--color-error);
+}
+.blocka-hud-botones {
+    display: flex;
+    gap: 8px;
+}
+.blocka-hud .boton {
+    height: 32px;
+    padding: 0 14px;
+    font-size: 13px;
+}
+/* botón redondo "?" que abre las instrucciones */
+.blocka-boton-ayuda {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    font-weight: 800;
+    font-size: 16px;
+    background: var(--color-secundario-luz-2);
+    border: 1px solid var(--color-texto-secundario);
+    transition: .2s;
+}
+.blocka-boton-ayuda:hover {
+    background: var(--color-primario-sombra-1);
+    border-color: var(--color-primario-luz);
+}
+
+.blocka-capa {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    border-radius: 12px;
+    background: #0C0D14e6;
+    display: grid;
+    place-content: center;
+    justify-items: center;
+    gap: 12px;
+    padding: 84px 24px 24px;                           /* arriba deja libre la franja del HUD */
+    text-align: center;
+    animation: blocka-aparecer .3s both;
+}
+.blocka-capa h2 {
+    font-size: 24px;
+}
+.blocka-capa p {
+    color: var(--color-texto-secundario);
+    max-width: 380px;
+}
+.blocka-capa-botones {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 6px;
+}
+/* al ganar: el cartel baja y deja ver la imagen completa */
+.blocka-capa.ligera {
+    inset: auto 0 0 0;
+    border-radius: 0 0 12px 12px;
+    background: linear-gradient(0deg, #0C0D14f5 55%, transparent);
+    padding-top: 56px;
+}
+@keyframes blocka-aparecer {
+    from { opacity: 0; }
+}
+
+/* ---------- elegir cantidad de piezas (dentro del cartel, antes de Comenzar) ---------- */
+.blocka-piezas {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: var(--color-texto-secundario);
+}
+.blocka-opcion {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    border: 1px solid var(--color-texto-secundario);
+    background: var(--color-secundario-luz-2);
+    font-weight: 800;
+    transition: .2s;
+}
+.blocka-opcion:hover {
+    background: var(--color-secundario-luz-3);
+}
+.blocka-opcion[aria-pressed="true"] {
+    background: var(--color-primario-sombra-1);
+    border-color: var(--color-primario-luz);
+    color: var(--color-texto);
+}
+.blocka-opcion:disabled {
+    opacity: .45;
+    pointer-events: none;
+}
+
+.blocka-sorteo {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    width: min(100%, 360px);
+    margin: 6px 0;
+}
+.blocka-sorteo img {
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 2px solid transparent;
+    opacity: .4;
+    transform: scale(.94);
+    transition: opacity .2s, transform .2s, border-color .2s;
+}
+.blocka-sorteo img.resaltada {
+    opacity: 1;
+    transform: scale(1.05);
+    border-color: var(--color-primario-luz);
+}
+.blocka-sorteo img.elegida {
+    transform: scale(1.14);
+    border-color: var(--color-acento);
+    box-shadow: 0 0 20px #FF660088;
+}
+.blocka-sorteo.terminado img:not(.elegida) {
+    opacity: .2;
+}
+
+/* ---------- modal de instrucciones ---------- */
+.blocka-modal {
+    width: min(92vw, 440px);
+    margin: auto;
+    padding: 24px;
+    border: 1px solid var(--color-secundario-luz-3);
+    border-radius: 16px;
+    background: var(--color-secundario);
+    color: var(--color-texto);
+}
+.blocka-modal::backdrop {
+    background: #0C0D14cc;                             /* oscurece la página detrás del modal */
+}
+.blocka-modal h2 {
+    font-size: 20px;
+    margin-bottom: 12px;
+}
+.blocka-modal ul {
+    display: grid;
+    gap: 8px;
+    padding-left: 18px;
+    font-size: 14px;
+    color: var(--color-texto-secundario);
+}
+.blocka-modal b {
+    color: var(--color-texto);
+}
+.blocka-modal form {
+    margin-top: 20px;
+    text-align: right;
+}
+
+/* ---------- encabezado compacto ---------- */
+.creditos {
+    margin-top: 12px;
+    font-size: 12px;
+}
+main {
+    padding-top: 12px;
+}
+.juego-encabezado {
+    margin: 0 0 12px;
+    gap: 2px;
+}
+.juego-encabezado h1 {
+    font-size: 24px;
+    line-height: 32px;
+    margin-top: 0;
+}

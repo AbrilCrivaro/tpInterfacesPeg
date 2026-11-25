@@ -1,0 +1,154 @@
+
+.peg-juego {
+    width: fit-content;
+    margin: 0 auto 32px;                              
+    padding: 16px;
+    border: 1px solid var(--color-secundario-luz-3);
+    background: var(--color-secundario);
+}
+
+
+.peg-tablero {
+    position: relative;
+}
+
+/* lienzo 16:9 alto fijo y el ancho se calcula con la proporcion */
+#peg-lienzo {
+    --alto-lienzo: 450px;
+    display: block;
+    height: var(--alto-lienzo);
+    width: calc(var(--alto-lienzo) * 16 / 9);        
+    border-radius: 12px;
+    background: var(--color-fondo-oscuro);             
+    user-select: none;
+}
+
+.peg-hud {
+    position: absolute;
+    inset: 16px;
+    z-index: 1;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    pointer-events: none;                              
+}
+.peg-hud > * {
+    pointer-events: auto;                             
+}
+/* tarjeta que agrupa tiempo y fichas */
+.peg-hud-datos {
+    display: flex;
+    gap: 8px;
+    padding: 8px 10px;
+    background: var(--color-secundario-luz-1) url("../assets/peg/telarana-hud.svg") right top / 90px no-repeat; 
+    border: 1px solid var(--color-secundario-luz-2);
+    border-radius: 10px;
+}
+/* cada dato */
+.peg-hud-datos > div {
+    display: grid;
+    gap: 2px;
+}
+.peg-hud small {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--color-texto-secundario);
+}
+
+.peg-hud b {
+    min-width: 62px;
+    padding: 2px 8px;
+    text-align: center;
+    font-size: 15px;
+    line-height: 22px;
+    font-variant-numeric: tabular-nums;              
+    background: #0C0D14;
+    border: 1px solid var(--color-secundario-luz-2);
+    border-radius: 8px;
+}
+/* los últimos 10 segundos el tiempo se pone en rojo */
+.peg-hud b.urgente {
+    color: var(--color-error);
+}
+.peg-hud .boton {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 32px;
+    padding: 0 14px;
+    font-size: 13px;
+}
+
+
+main {
+    padding-top: 12px;
+}
+.juego-encabezado {
+    margin: 0 0 12px;
+    gap: 2px;
+}
+.juego-encabezado h1 {
+    font-size: 24px;
+    line-height: 32px;
+    margin-top: 0;
+}
+
+.peg-capa {
+    position: absolute;
+    inset: 0;
+    z-index: 2;                                       
+    border-radius: 12px;
+    background: rgba(12, 13, 20, 0.88);
+    display: grid;
+    place-content: center;
+    justify-items: center;
+    gap: 14px;
+    padding: 20px;
+    text-align: center;
+}
+.peg-capa[hidden] {
+    display: none;                                     
+}
+.peg-capa h2 {
+    font-size: 22px;
+}
+.peg-capa p {
+    color: var(--color-texto-secundario);
+    font-size: 14px;
+    max-width: 300px;
+}
+
+#peg-capa {
+    background: #0C0D14 url("../assets/peg/fondo-inicio.svg") center / cover no-repeat;
+}
+
+.peg-opciones {
+    display: flex;
+    gap: 14px;
+}
+.peg-opcion {
+    width: 72px;
+    height: 72px;
+    padding: 4px;
+    border-radius: 50%;
+    border: 3px solid transparent;
+    background: var(--color-secundario-luz-1);
+    cursor: pointer;
+    transition: .2s;
+}
+.peg-opcion img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+.peg-opcion:hover {
+    border-color: var(--color-secundario-luz-3);
+    transform: scale(1.06);
+}
+
+.peg-opcion[aria-pressed="true"] {
+    border-color: var(--color-primario);
+    box-shadow: 0 0 18px #7B61FF88;
+    transform: scale(1.1);
+}
